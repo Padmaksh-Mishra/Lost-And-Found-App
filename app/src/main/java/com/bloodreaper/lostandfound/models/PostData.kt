@@ -9,5 +9,5 @@ data class PostData(
     val phone: String? = null,
     val where: String? = null,
     val message: String? = null,
-    val image: Image?=null
+    val image: String?=null
 )

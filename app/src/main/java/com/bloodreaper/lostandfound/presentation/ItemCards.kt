@@ -1,5 +1,6 @@
 package com.bloodreaper.lostandfound.presentation
 
+import android.graphics.BitmapFactory
 import android.media.Image
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
@@ -21,6 +22,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -32,6 +34,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.bloodreaper.lostandfound.R
 import com.bloodreaper.lostandfound.models.PostData
+import com.bloodreaper.lostandfound.util.DEFAULT_RECIPE_IMAGE
+import com.bloodreaper.lostandfound.util.loadPicture
 import kotlin.math.exp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,14 +66,17 @@ fun ItemCards(
                 .fillMaxWidth()
                 .padding(4.dp)
         ) {
-            Image(
-                    painterResource(R.drawable.empty_plate),
+            val image = post.image?.let { loadPicture(url = it, defaultImage = DEFAULT_RECIPE_IMAGE).value }
+            if (image != null) {
+                Image(
+                    bitmap = image.asImageBitmap(),
                     contentDescription = "",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 8.dp),
                     contentScale = ContentScale.Fit
                 )
+            }
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {

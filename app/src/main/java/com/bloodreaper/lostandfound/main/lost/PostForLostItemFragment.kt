@@ -48,6 +48,7 @@ class PostForLostItemFragment : Fragment() {
                     val phone = inputTextField("Phone")
                     val whereLost = inputTextField("Where Lost?")
                     val message = inputTextField("Message")
+                    val url = inputTextField("Image URL")
                     Spacer(modifier = Modifier.padding(16.dp))
                     Button(
 
@@ -61,11 +62,12 @@ class PostForLostItemFragment : Fragment() {
                                 where = whereLost,
                                 message = message,
                                 type = "lost",
-                                uid = FirebaseAuth.getInstance().uid
+                                uid = FirebaseAuth.getInstance().uid,
+                                image = url
                             )
 
                             if(name.isNotEmpty() && phone.isNotEmpty() && whereLost.isNotEmpty()
-                                && message.isNotEmpty()){
+                                && message.isNotEmpty()&&url.isNotEmpty()){
                                 if (uid != null) {
                                     databaseReference.child(uid).setValue(lost).addOnCompleteListener {
                                         if (it.isSuccessful) {
