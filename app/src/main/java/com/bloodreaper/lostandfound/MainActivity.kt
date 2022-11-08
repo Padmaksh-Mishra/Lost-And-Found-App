@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -56,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         }
         this._doubleBackToExitPressedOnce = true
         Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show()
-        Handler().postDelayed(Runnable { _doubleBackToExitPressedOnce = false }, 2000)
+        Handler().postDelayed({ _doubleBackToExitPressedOnce = false }, 2000)
     }
 
 }
