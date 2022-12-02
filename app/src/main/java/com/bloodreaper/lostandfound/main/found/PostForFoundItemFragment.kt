@@ -6,10 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,10 +21,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.bloodreaper.lostandfound.models.PostData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
 class PostForFoundItemFragment : Fragment() {
@@ -48,19 +47,31 @@ class PostForFoundItemFragment : Fragment() {
                     val phone = inputTextField("Phone")
                     val whereLost = inputTextField("Where Found?")
                     val message = inputTextField("Message")
+                    val imageUrl = inputTextField(label = "Image url")
                     Spacer(modifier = Modifier.padding(16.dp))
+                    //val imageUri = RequestContentPermission()
                     Button(
                         onClick = {
                             firebaseDatabase = FirebaseDatabase.getInstance()
                             databaseReference = firebaseDatabase.getReference("PostData")
                             val uid = databaseReference.push().key
+                            storageReference = FirebaseStorage.getInstance().getReference("Found/"+"hello.jpg")
+
+//                            if (imageUri != null) {
+//                                storageReference.putFile(imageUri).addOnSuccessListener{
+//                                    Toast.makeText(requireContext(), "Uploaded Successfully", Toast.LENGTH_SHORT).show()
+//                                }.addOnFailureListener{
+//                                    Toast.makeText(requireContext(),"Failed to upload", Toast.LENGTH_SHORT).show()
+//                                }
+//                            }
                             val lost = PostData(
                                 name = name,
                                 phone = phone,
                                 where = whereLost,
                                 message = message,
                                 type = "found",
-                                uid = FirebaseAuth.getInstance().uid
+                                uid = FirebaseAuth.getInstance().uid,
+                                imageUrl = imageUrl
                             )
 
                             if(name.isNotEmpty() && phone.isNotEmpty() && whereLost.isNotEmpty()
@@ -71,6 +82,7 @@ class PostForFoundItemFragment : Fragment() {
                                         if (it.isSuccessful) {
                                             Toast.makeText(context,"Found item reported",
                                                 Toast.LENGTH_SHORT).show()
+                                            findNavController().navigate(PostForFoundItemFragmentDirections.actionPostForFoundItemFragmentToFoundFragment())
                                         } else {
                                             Toast.makeText(context, it.exception.toString(),
                                                 Toast.LENGTH_SHORT).show()

@@ -40,10 +40,26 @@
         android:id="@+id/postForLostItemFragment"
         android:name="com.bloodreaper.lostandfound.main.lost.PostForLostItemFragment"
         android:label="Report a lost item"
-        tools:layout="@layout/fragment_post_for_lost_item" />
+        tools:layout="@layout/fragment_post_for_lost_item" >
+        <action
+            android:id="@+id/action_postForLostItemFragment_to_lost_fragment"
+            app:destination="@id/lost_fragment"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/slide_out_bottom"
+            app:popEnterAnim="@anim/slide_out_top"
+            app:popExitAnim="@anim/slide_in_bottom" />
+    </fragment>
     <fragment
         android:id="@+id/postForFoundItemFragment"
         android:name="com.bloodreaper.lostandfound.main.found.PostForFoundItemFragment"
         android:label="Report a found item"
-        tools:layout="@layout/fragment_post_for_found_item" />
+        tools:layout="@layout/fragment_post_for_found_item" >
+        <action
+            android:id="@+id/action_postForFoundItemFragment_to_found_fragment"
+            app:destination="@id/found_fragment"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/slide_out_bottom"
+            app:popEnterAnim="@anim/slide_out_top"
+            app:popExitAnim="@anim/slide_in_bottom" />
+    </fragment>
 </navigation>

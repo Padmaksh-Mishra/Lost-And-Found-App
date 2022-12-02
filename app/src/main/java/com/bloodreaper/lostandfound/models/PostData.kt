@@ -1,7 +1,5 @@
 package com.bloodreaper.lostandfound.models
 
-import android.media.Image
-
 data class PostData(
     val type: String? = null,
     val uid : String? = null,
@@ -9,5 +7,6 @@ data class PostData(
     val phone: String? = null,
     val where: String? = null,
     val message: String? = null,
-    val image: Image?=null
+    //var image: Bitmap?=null,
+    var imageUrl : String?=null,
 )

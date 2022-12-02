@@ -15,8 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bloodreaper.lostandfound.MainActivity
-import com.bloodreaper.lostandfound.models.User
 import com.bloodreaper.lostandfound.databinding.ActivitySignUpBinding
+import com.bloodreaper.lostandfound.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -58,7 +58,9 @@ class SignUpActivity : AppCompatActivity() {
             val phone = binding.signupPhone.text.toString()
             val whatsApp = binding.signupWhatsapp.text.toString()
             val user = User(name, roll, email, phone, whatsApp)
-            if (email.isNotEmpty() && pass.isNotEmpty() && confPass.isNotEmpty() && name.isNotEmpty() && roll.isNotEmpty() && phone.isNotEmpty() && whatsApp.isNotEmpty()) {
+            val re = Regex("^[a-zA-Z0-9+_.-]+@iitp.ac.in+$")
+            val valid = email.matches(re)
+            if (email.isNotEmpty() && pass.isNotEmpty() && confPass.isNotEmpty() && name.isNotEmpty() && roll.isNotEmpty() && phone.isNotEmpty() && whatsApp.isNotEmpty()&&valid) {
                 if (pass == confPass) {
                     firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener { authResultTask ->
                         if (authResultTask.isSuccessful) {
@@ -85,7 +87,8 @@ class SignUpActivity : AppCompatActivity() {
                     Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, "Empty fields are not allowed", Toast.LENGTH_SHORT).show()
+                if(valid) Toast.makeText(this, "Empty fields are not allowed", Toast.LENGTH_SHORT).show()
+                else Toast.makeText(this, "Only IITP mail domain is supported", Toast.LENGTH_SHORT).show()
             }
         }
     }

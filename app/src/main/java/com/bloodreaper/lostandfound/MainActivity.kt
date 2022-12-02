@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment

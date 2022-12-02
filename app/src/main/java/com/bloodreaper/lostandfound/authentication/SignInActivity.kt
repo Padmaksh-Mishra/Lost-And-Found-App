@@ -1,9 +1,9 @@
 package com.bloodreaper.lostandfound.authentication
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.bloodreaper.lostandfound.MainActivity
 import com.bloodreaper.lostandfound.databinding.ActivitySignInBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -30,8 +30,9 @@ class SignInActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener {
             val email = binding.emailLogin.text.toString()
             val password = binding.loginpass.text.toString()
-
-            if (email.isNotEmpty() && password.isNotEmpty()) {
+            val re = Regex("^[a-zA-Z0-9+_.-]+@iitp.ac.in+$")
+            val valid = email.matches(re)
+            if (email.isNotEmpty() && password.isNotEmpty() && valid) {
                 firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
@@ -42,7 +43,7 @@ class SignInActivity : AppCompatActivity() {
                         }
                     }
             } else {
-                Toast.makeText(this, "Empty fields are not allowed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Only IITP mail domain is supported", Toast.LENGTH_SHORT).show()
             }
         }
     }
